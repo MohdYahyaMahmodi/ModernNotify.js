@@ -1,0 +1,38 @@
+{
+  "name": "modernnotify",
+  "version": "1.0.1",
+  "description": "A modern, customizable notification library for web applications",
+  "main": "dist/modernnotify.js",
+  "module": "dist/modernnotify.esm.js",
+  "browser": "dist/modernnotify.min.js",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "rollup -c",
+    "prepublishOnly": "npm run build"
+  },
+  "keywords": [
+    "notification",
+    "toast",
+    "alert",
+    "javascript",
+    "frontend"
+  ],
+  "author": "Mohd Mahmodi",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MohdYahyaMahmodi/ModernNotify.git"
+  },
+  "bugs": {
+    "url": "https://github.com/MohdYahyaMahmodi/ModernNotify/issues"
+  },
+  "homepage": "https://github.com/MohdYahyaMahmodi/ModernNotify#readme",
+  "devDependencies": {
+    "rollup": "^2.79.1",
+    "@rollup/plugin-commonjs": "^22.0.2",
+    "@rollup/plugin-node-resolve": "^13.3.0",
+    "rollup-plugin-terser": "^7.0.2"
+  }
+}

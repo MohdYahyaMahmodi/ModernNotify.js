@@ -1,0 +1,906 @@
+<!DOCTYPE html>
+<html lang="en" class="bg-gray-100">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ModernNotify Demo</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/themes/prism-tomorrow.min.css" rel="stylesheet" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-javascript.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.62.0/codemirror.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.62.0/theme/monokai.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.62.0/codemirror.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.62.0/mode/javascript/javascript.min.js"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#3498db',
+                        secondary: '#2ecc71',
+                        warning: '#f39c12',
+                        error: '#e74c3c',
+                        info: '#3498db',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .code-editor {
+            max-height: 300px;
+            overflow-y: auto;
+        }
+        .modal {
+            background-color: rgba(0, 0, 0, 0.5);
+            display: none;
+        }
+        .CodeMirror {
+            height: 500px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body class="font-sans text-gray-800">
+    <div class="container mx-auto px-4 py-8">
+        <h1 class="text-4xl font-bold text-center text-primary mb-8">ModernNotify.js Demo</h1>
+
+        <div class="bg-gray-100 rounded-lg shadow-md p-8 mb-8">
+            <h2 class="text-3xl font-bold text-center text-gray-800 mb-6">Preset Notifications</h2>
+            <p class="text-gray-600 mb-8 text-center max-w-3xl mx-auto">
+                Explore the various features and styles of ModernNotify with these preset notifications. 
+                Each card showcases a different type of notification or configuration option. 
+                Click the "Show" button to see the notification in action, or "View Code" to understand how it's implemented.
+                These presets offer a quick way to explore ModernNotify's capabilities and inspire your own custom configurations.
+            </p>
+        
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                <div class="bg-white rounded-lg shadow-sm p-4 flex flex-col justify-between">
+                    <h3 class="text-lg font-semibold text-gray-800 mb-2">Success</h3>
+                    <p class="text-sm text-gray-600 mb-4">Display a success message with default settings.</p>
+                    <div class="flex items-center space-x-2">
+                        <button onclick="showSuccessNotification()" class="flex-grow py-2 px-4 bg-green-500 text-white rounded-md hover:bg-green-600 transition-colors duration-300">Show</button>
+                        <button onclick="openCodeModal('success')" class="p-2 bg-gray-200 text-gray-700 rounded-md hover:bg-gray-300 transition-colors duration-300" aria-label="View Code">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" />
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+        
+                <div class="bg-white rounded-lg shadow-sm p-4 flex flex-col justify-between">
+                    <h3 class="text-lg font-semibold text-gray-800 mb-2">Error</h3>
+                    <p class="text-sm text-gray-600 mb-4">Show an error notification with a dark theme.</p>
+                    <div class="flex items-center space-x-2">
+                        <button onclick="showErrorNotification()" class="flex-grow py-2 px-4 bg-red-500 text-white rounded-md hover:bg-red-600 transition-colors duration-300">Show</button>
+                        <button onclick="openCodeModal('error')" class="p-2 bg-gray-200 text-gray-700 rounded-md hover:bg-gray-300 transition-colors duration-300" aria-label="View Code">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" />
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+        
+                <div class="bg-white rounded-lg shadow-sm p-4 flex flex-col justify-between">
+                    <h3 class="text-lg font-semibold text-gray-800 mb-2">Warning</h3>
+                    <p class="text-sm text-gray-600 mb-4">Display a warning with fade animation.</p>
+                    <div class="flex items-center space-x-2">
+                        <button onclick="showWarningNotification()" class="flex-grow py-2 px-4 bg-yellow-500 text-white rounded-md hover:bg-yellow-600 transition-colors duration-300">Show</button>
+                        <button onclick="openCodeModal('warning')" class="p-2 bg-gray-200 text-gray-700 rounded-md hover:bg-gray-300 transition-colors duration-300" aria-label="View Code">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" />
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+        
+                <div class="bg-white rounded-lg shadow-sm p-4 flex flex-col justify-between">
+                    <h3 class="text-lg font-semibold text-gray-800 mb-2">Info</h3>
+                    <p class="text-sm text-gray-600 mb-4">Show an info notification without progress bar.</p>
+                    <div class="flex items-center space-x-2">
+                        <button onclick="showInfoNotification()" class="flex-grow py-2 px-4 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition-colors duration-300">Show</button>
+                        <button onclick="openCodeModal('info')" class="p-2 bg-gray-200 text-gray-700 rounded-md hover:bg-gray-300 transition-colors duration-300" aria-label="View Code">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" />
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+        
+                <div class="bg-white rounded-lg shadow-sm p-4 flex flex-col justify-between">
+                    <h3 class="text-lg font-semibold text-gray-800 mb-2">Top Left</h3>
+                    <p class="text-sm text-gray-600 mb-4">Notification in the top-left corner.</p>
+                    <div class="flex items-center space-x-2">
+                        <button onclick="showTopLeftNotification()" class="flex-grow py-2 px-4 bg-indigo-500 text-white rounded-md hover:bg-indigo-600 transition-colors duration-300">Show</button>
+                        <button onclick="openCodeModal('topLeft')" class="p-2 bg-gray-200 text-gray-700 rounded-md hover:bg-gray-300 transition-colors duration-300" aria-label="View Code">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" />
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+        
+                <div class="bg-white rounded-lg shadow-sm p-4 flex flex-col justify-between">
+                    <h3 class="text-lg font-semibold text-gray-800 mb-2">Bottom Right</h3>
+                    <p class="text-sm text-gray-600 mb-4">Notification in the bottom-right corner.</p>
+                    <div class="flex items-center space-x-2">
+                        <button onclick="showBottomRightNotification()" class="flex-grow py-2 px-4 bg-indigo-500 text-white rounded-md hover:bg-indigo-600 transition-colors duration-300">Show</button>
+                        <button onclick="openCodeModal('bottomRight')" class="p-2 bg-gray-200 text-gray-700 rounded-md hover:bg-gray-300 transition-colors duration-300" aria-label="View Code">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" />
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+        
+                <div class="bg-white rounded-lg shadow-sm p-4 flex flex-col justify-between">
+                    <h3 class="text-lg font-semibold text-gray-800 mb-2">Bottom Left</h3>
+                    <p class="text-sm text-gray-600 mb-4">Notification in the bottom-left corner.</p>
+                    <div class="flex items-center space-x-2">
+                        <button onclick="showBottomLeftNotification()" class="flex-grow py-2 px-4 bg-indigo-500 text-white rounded-md hover:bg-indigo-600 transition-colors duration-300">Show</button>
+                        <button onclick="openCodeModal('bottomLeft')" class="p-2 bg-gray-200 text-gray-700 rounded-md hover:bg-gray-300 transition-colors duration-300" aria-label="View Code">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" />
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+        
+                <div class="bg-white rounded-lg shadow-sm p-4 flex flex-col justify-between">
+                    <h3 class="text-lg font-semibold text-gray-800 mb-2">Long Duration</h3>
+                    <p class="text-sm text-gray-600 mb-4">Notification that stays for 10 seconds.</p>
+                    <div class="flex items-center space-x-2">
+                        <button onclick="showLongDurationNotification()" class="flex-grow py-2 px-4 bg-purple-500 text-white rounded-md hover:bg-purple-600 transition-colors duration-300">Show</button>
+                        <button onclick="openCodeModal('longDuration')" class="p-2 bg-gray-200 text-gray-700 rounded-md hover:bg-gray-300 transition-colors duration-300" aria-label="View Code">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" />
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+        
+                <div class="bg-white rounded-lg shadow-sm p-4 flex flex-col justify-between">
+                    <h3 class="text-lg font-semibold text-gray-800 mb-2">Short Duration</h3>
+                    <p class="text-sm text-gray-600 mb-4">Quick notification (1 second duration).</p>
+                    <div class="flex items-center space-x-2">
+                        <button onclick="showShortDurationNotification()" class="flex-grow py-2 px-4 bg-purple-500 text-white rounded-md hover:bg-purple-600 transition-colors duration-300">Show</button>
+                        <button onclick="openCodeModal('shortDuration')" class="p-2 bg-gray-200 text-gray-700 rounded-md hover:bg-gray-300 transition-colors duration-300" aria-label="View Code">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" />
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+        
+                <div class="bg-white rounded-lg shadow-sm p-4 flex flex-col justify-between">
+                    <h3 class="text-lg font-semibold text-gray-800 mb-2">Wide</h3>
+                    <p class="text-sm text-gray-600 mb-4">A wider notification (400px width).</p>
+                    <div class="flex items-center space-x-2">
+                        <button onclick="showWideNotification()" class="flex-grow py-2 px-4 bg-teal-500 text-white rounded-md hover:bg-teal-600 transition-colors duration-300">Show</button>
+                        <button onclick="openCodeModal('wide')" class="p-2 bg-gray-200 text-gray-700 rounded-md hover:bg-gray-300 transition-colors duration-300" aria-label="View Code">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" />
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+        
+                <div class="bg-white rounded-lg shadow-sm p-4 flex flex-col justify-between">
+                    <h3 class="text-lg font-semibold text-gray-800 mb-2">Narrow</h3>
+                    <p class="text-sm text-gray-600 mb-4">A narrower notification (200px width).</p>
+                    <div class="flex items-center space-x-2">
+                        <button onclick="showNarrowNotification()" class="flex-grow py-2 px-4 bg-teal-500 text-white rounded-md hover:bg-teal-600 transition-colors duration-300">Show</button>
+                        <button onclick="openCodeModal('narrow')" class="p-2 bg-gray-200 text-gray-700 rounded-md hover:bg-gray-300 transition-colors duration-300" aria-label="View Code">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" />
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+        
+                <div class="bg-white rounded-lg shadow-sm p-4 flex flex-col justify-between">
+                    <h3 class="text-lg font-semibold text-gray-800 mb-2">Custom HTML</h3>
+                    <p class="text-sm text-gray-600 mb-4">Notification with custom HTML content.</p>
+                    <div class="flex items-center space-x-2">
+                        <button onclick="showCustomHTMLNotification()" class="flex-grow py-2 px-4 bg-pink-500 text-white rounded-md hover:bg-pink-600 transition-colors duration-300">Show</button>
+                        <button onclick="openCodeModal('customHTML')" class="p-2 bg-gray-200 text-gray-700 rounded-md hover:bg-gray-300 transition-colors duration-300" aria-label="View Code">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" />
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+        
+                <div class="bg-white rounded-lg shadow-sm p-4 flex flex-col justify-between">
+                    <h3 class="text-lg font-semibold text-gray-800 mb-2">RTL</h3>
+                    <p class="text-sm text-gray-600 mb-4">Right-to-left text notification.</p>
+                    <div class="flex items-center space-x-2">
+                        <button onclick="showRTLNotification()" class="flex-grow py-2 px-4 bg-green-500 text-white rounded-md hover:bg-green-600 transition-colors duration-300">Show</button>
+                        <button onclick="openCodeModal('rtl')" class="p-2 bg-gray-200 text-gray-700 rounded-md hover:bg-gray-300 transition-colors duration-300" aria-label="View Code">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" />
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+        
+                <div class="bg-white rounded-lg shadow-sm p-4 flex flex-col justify-between">
+                    <h3 class="text-lg font-semibold text-gray-800 mb-2">Persistent</h3>
+                    <p class="text-sm text-gray-600 mb-4">Notification that doesn't auto-dismiss.</p>
+                    <div class="flex items-center space-x-2">
+                        <button onclick="showPersistentNotification()" class="flex-grow py-2 px-4 bg-yellow-500 text-white rounded-md hover:bg-yellow-600 transition-colors duration-300">Show</button>
+                        <button onclick="openCodeModal('persistent')" class="p-2 bg-gray-200 text-gray-700 rounded-md hover:bg-gray-300 transition-colors duration-300" aria-label="View Code">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" />
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+        
+                <div class="bg-white rounded-lg shadow-sm p-4 flex flex-col justify-between">
+                    <h3 class="text-lg font-semibold text-gray-800 mb-2">With Actions</h3>
+                    <p class="text-sm text-gray-600 mb-4">Notification with clickable buttons.</p>
+                    <div class="flex items-center space-x-2">
+                        <button onclick="showNotificationWithActions()" class="flex-grow py-2 px-4 bg-red-500 text-white rounded-md hover:bg-red-600 transition-colors duration-300">Show</button>
+                        <button onclick="openCodeModal('withActions')" class="p-2 bg-gray-200 text-gray-700 rounded-md hover:bg-gray-300 transition-colors duration-300" aria-label="View Code">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" />
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+        
+                <div class="bg-white rounded-lg shadow-sm p-4 flex flex-col justify-between">
+                    <h3 class="text-lg font-semibold text-gray-800 mb-2">With Sound</h3>
+                    <p class="text-sm text-gray-600 mb-4">Notification with an audio alert.</p>
+                    <div class="flex items-center space-x-2">
+                        <button onclick="showNotificationWithSound()" class="flex-grow py-2 px-4 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition-colors duration-300">Show</button>
+                        <button onclick="openCodeModal('withSound')" class="p-2 bg-gray-200 text-gray-700 rounded-md hover:bg-gray-300 transition-colors duration-300" aria-label="View Code">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" />
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+        
+                <div class="bg-white rounded-lg shadow-sm p-4 flex flex-col justify-between">
+                    <h3 class="text-lg font-semibold text-gray-800 mb-2">Grouped</h3>
+                    <p class="text-sm text-gray-600 mb-4">Multiple notifications grouped together.</p>
+                    <div class="flex items-center space-x-2">
+                        <button onclick="showGroupedNotifications()" class="flex-grow py-2 px-4 bg-orange-500 text-white rounded-md hover:bg-orange-600 transition-colors duration-300">Show</button>
+                        <button onclick="openCodeModal('grouped')" class="p-2 bg-gray-200 text-gray-700 rounded-md hover:bg-gray-300 transition-colors duration-300" aria-label="View Code">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" />
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+        
+                <div class="bg-white rounded-lg shadow-sm p-4 flex flex-col justify-between">
+                    <h3 class="text-lg font-semibold text-gray-800 mb-2">Dark Theme</h3>
+                    <p class="text-sm text-gray-600 mb-4">Notification with a dark color scheme.</p>
+                    <div class="flex items-center space-x-2">
+                        <button onclick="showDarkThemeNotification()" class="flex-grow py-2 px-4 bg-gray-800 text-white rounded-md hover:bg-gray-900 transition-colors duration-300">Show</button>
+                        <button onclick="openCodeModal('darkTheme')" class="p-2 bg-gray-200 text-gray-700 rounded-md hover:bg-gray-300 transition-colors duration-300" aria-label="View Code">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" />
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+
+        <div class="bg-gray-100 rounded-lg shadow-md p-8 mb-8">
+            <h2 class="text-3xl font-bold text-center text-gray-800 mb-6">Custom Notification</h2>
+            <p class="text-gray-600 mb-8 text-center max-w-2xl mx-auto">
+                Tailor your notification to perfection using the options below. Experiment with different settings to create a notification that fits your exact needs.
+            </p>
+            
+            <form id="customNotificationForm" class="space-y-10">
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                    <div class="bg-white p-6 rounded-lg shadow-sm space-y-6">
+                        <h3 class="text-xl font-semibold text-gray-800 border-b pb-2">Content</h3>
+                        <div>
+                            <label for="customIcon" class="block text-sm font-medium text-gray-700 mb-1">Icon Type</label>
+                            <select id="customIcon" class="block w-full px-4 py-3 text-gray-700 bg-gray-50 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors">
+                                <option value="success">Success</option>
+                                <option value="error">Error</option>
+                                <option value="warning">Warning</option>
+                                <option value="info">Info</option>
+                                <option value="custom">Custom</option>
+                            </select>
+                        </div>
+                        <div id="customIconUrlContainer" class="hidden">
+                            <label for="customIconUrl" class="block text-sm font-medium text-gray-700 mb-1">Custom Icon URL</label>
+                            <input type="text" id="customIconUrl" placeholder="https://example.com/icon.svg" class="block w-full px-4 py-3 text-gray-700 bg-gray-50 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors">
+                        </div>
+                        <div>
+                            <label for="customTitle" class="block text-sm font-medium text-gray-700 mb-1">Title</label>
+                            <input type="text" id="customTitle" value="Custom Notification" class="block w-full px-4 py-3 text-gray-700 bg-gray-50 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors">
+                        </div>
+                        <div>
+                            <label for="customText" class="block text-sm font-medium text-gray-700 mb-1">Message</label>
+                            <textarea id="customText" rows="4" class="block w-full px-4 py-3 text-gray-700 bg-gray-50 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors">This is a custom notification</textarea>
+                        </div>
+                    </div>
+        
+                    <div class="bg-white p-6 rounded-lg shadow-sm space-y-6">
+                        <h3 class="text-xl font-semibold text-gray-800 border-b pb-2">Appearance</h3>
+                        <div>
+                            <label for="customDuration" class="block text-sm font-medium text-gray-700 mb-1">Duration (ms)</label>
+                            <input type="number" id="customDuration" value="3000" min="1000" step="1000" class="block w-full px-4 py-3 text-gray-700 bg-gray-50 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors">
+                        </div>
+                        <div>
+                            <label for="customTheme" class="block text-sm font-medium text-gray-700 mb-1">Theme</label>
+                            <select id="customTheme" class="block w-full px-4 py-3 text-gray-700 bg-gray-50 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors">
+                                <option value="light">Light</option>
+                                <option value="dark">Dark</option>
+                                <option value="custom">Custom</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label for="customWidth" class="block text-sm font-medium text-gray-700 mb-1">Width (px)</label>
+                            <input type="number" id="customWidth" value="300" min="200" max="600" step="50" class="block w-full px-4 py-3 text-gray-700 bg-gray-50 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors">
+                        </div>
+                        <div>
+                            <label for="customPosition" class="block text-sm font-medium text-gray-700 mb-1">Position</label>
+                            <select id="customPosition" class="block w-full px-4 py-3 text-gray-700 bg-gray-50 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors">
+                                <option value="top-right">Top Right</option>
+                                <option value="top-left">Top Left</option>
+                                <option value="bottom-right">Bottom Right</option>
+                                <option value="bottom-left">Bottom Left</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+        
+                <div class="bg-white p-6 rounded-lg shadow-sm space-y-6">
+                    <h3 class="text-xl font-semibold text-gray-800 border-b pb-2">Animation & Behavior</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <label for="customAnimationStyle" class="block text-sm font-medium text-gray-700 mb-1">Animation Style</label>
+                            <select id="customAnimationStyle" class="block w-full px-4 py-3 text-gray-700 bg-gray-50 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors">
+                                <option value="slide">Slide</option>
+                                <option value="fade">Fade</option>
+                            </select>
+                        </div>
+                        <div id="slideDirectionContainer">
+                            <label for="customSlideDirection" class="block text-sm font-medium text-gray-700 mb-1">Slide Direction</label>
+                            <select id="customSlideDirection" class="block w-full px-4 py-3 text-gray-700 bg-gray-50 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors">
+                                <option value="top">Top</option>
+                                <option value="right">Right</option>
+                                <option value="bottom">Bottom</option>
+                                <option value="left">Left</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="flex space-x-6">
+                        <div class="flex items-center">
+                            <input id="customPauseOnHover" type="checkbox" checked class="h-5 w-5 text-blue-600 focus:ring-blue-500 border-gray-300 rounded">
+                            <label for="customPauseOnHover" class="ml-2 block text-sm text-gray-700">Pause on Hover</label>
+                        </div>
+                        <div class="flex items-center">
+                            <input id="customShowProgressBar" type="checkbox" checked class="h-5 w-5 text-blue-600 focus:ring-blue-500 border-gray-300 rounded">
+                            <label for="customShowProgressBar" class="ml-2 block text-sm text-gray-700">Show Progress Bar</label>
+                        </div>
+                    </div>
+                </div>
+        
+                <div id="customThemeColors" class="hidden bg-white p-6 rounded-lg shadow-sm space-y-6">
+                    <h3 class="text-xl font-semibold text-gray-800 border-b pb-2">Custom Theme Colors</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <label for="customBackgroundColor" class="block text-sm font-medium text-gray-700 mb-1">Background Color</label>
+                            <div class="flex">
+                                <input type="color" id="customBackgroundColor" value="#ffffff" class="h-10 w-10 border-gray-300 rounded-l-md">
+                                <input type="text" value="#ffffff" class="flex-1 px-4 py-2 text-gray-700 bg-gray-50 border border-l-0 border-gray-300 rounded-r-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors">
+                            </div>
+                        </div>
+                        <div>
+                            <label for="customTextColor" class="block text-sm font-medium text-gray-700 mb-1">Text Color</label>
+                            <div class="flex">
+                                <input type="color" id="customTextColor" value="#333333" class="h-10 w-10 border-gray-300 rounded-l-md">
+                                <input type="text" value="#333333" class="flex-1 px-4 py-2 text-gray-700 bg-gray-50 border border-l-0 border-gray-300 rounded-r-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors">
+                            </div>
+                        </div>
+                        <div>
+                            <label for="customProgressBarColor" class="block text-sm font-medium text-gray-700 mb-1">Progress Bar Color</label>
+                            <div class="flex">
+                                <input type="color" id="customProgressBarColor" value="#4CAF50" class="h-10 w-10 border-gray-300 rounded-l-md">
+                                <input type="text" value="#4CAF50" class="flex-1 px-4 py-2 text-gray-700 bg-gray-50 border border-l-0 border-gray-300 rounded-r-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors">
+                            </div>
+                        </div>
+                        <div>
+                            <label for="customTitleColor" class="block text-sm font-medium text-gray-700 mb-1">Title Color</label>
+                            <div class="flex">
+                                <input type="color" id="customTitleColor" value="#000000" class="h-10 w-10 border-gray-300 rounded-l-md">
+                                <input type="text" value="#000000" class="flex-1 px-4 py-2 text-gray-700 bg-gray-50 border border-l-0 border-gray-300 rounded-r-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+        
+                <div>
+                    <button type="submit" id="showCustomNotification" class="w-full flex justify-center py-3 px-4 border border-transparent rounded-md shadow-sm text-lg font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors duration-300">
+                        Show Custom Notification
+                    </button>
+                </div>
+            </form>
+        </div>
+
+        <div class="bg-white rounded-lg shadow-md p-6 mt-8">
+            <h2 class="text-2xl font-semibold text-center text-gray-700 mb-6">Test ModernNotify</h2>
+            <p class="mb-4 text-gray-600">
+                Use the code editor below to test ModernNotify. You'll find several pre-written examples.
+                Click the "Execute Code" button to run the code and see the notification in action.
+                Feel free to modify the examples or write your own code to explore ModernNotify's features!
+            </p>
+            <div class="mb-4">
+                <textarea id="codeEditor"></textarea>
+            </div>
+            <button id="executeCode" class="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 transition-colors duration-300">
+                Execute Code
+            </button>
+        </div>
+
+        <!-- Modal for displaying code -->
+        <div id="codeModal" class="modal fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden">
+            <div class="bg-white rounded-lg p-6 max-w-2xl w-full">
+                <div class="flex justify-between items-center mb-4">
+                    <h2 class="text-xl font-bold text-gray-800">Notification Code</h2>
+                    <button onclick="closeCodeModal()" class="text-gray-400 hover:text-gray-600 transition-colors duration-200">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                        </svg>
+                    </button>
+                </div>
+                <div class="code-editor mb-4">
+                    <pre><code class="language-javascript" id="codeContent"></code></pre>
+                </div>
+                <button onclick="copyCode()" class="flex items-center justify-center w-full py-2 px-4 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition-colors duration-300">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16h8M8 12h8m-5 8h2a2 2 0 002-2v-1a2 2 0 00-2-2H7a2 2 0 00-2 2v1a2 2 0 002 2h2z"/>
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 5h-3l-4 4h11a2 2 0 002-2V5h-2v2H9l2-2h4v2z"/>
+                    </svg>
+                    Copy to Clipboard
+                </button>
+            </div>
+        </div>
+
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/modernnotify@1.0.1/dist/modernnotify.min.js"></script>
+    <script>
+        // Code snippets for each notification
+        const codeSnippets = {
+            success: `ModernNotify.init({ position: 'top-right' });
+ModernNotify.success('Operation completed successfully!');`,
+            error: `ModernNotify.init({ position: 'top-right', theme: 'dark' });
+ModernNotify.error('An error occurred. Please try again.');`,
+            warning: `ModernNotify.init({ position: 'top-right', animationStyle: 'fade' });
+ModernNotify.warning('Warning: Low disk space');`,
+            info: `ModernNotify.init({ position: 'top-right', showProgressBar: false });
+ModernNotify.info('Your session will expire in 5 minutes');`,
+            topLeft: `ModernNotify.init({ 
+    position: 'top-left',
+    animationStyle: 'slide',
+    slideDirection: 'left'
+});
+ModernNotify.info('This notification appears in the top-left corner');`,
+            bottomRight: `ModernNotify.init({ position: 'bottom-right' });
+ModernNotify.info('This notification appears in the bottom-right corner');`,
+            bottomLeft: `ModernNotify.init({ 
+    position: 'bottom-left',
+    animationStyle: 'slide',
+    slideDirection: 'left'
+});
+ModernNotify.info('This notification appears in the bottom-left corner');`,
+            longDuration: `ModernNotify.init({ duration: 10000 });
+ModernNotify.info('This notification will stay for 10 seconds');`,
+            shortDuration: `ModernNotify.init({ duration: 1000 });
+ModernNotify.info('Quick notification!');`,
+            wide: `ModernNotify.init({ width: '400px' });
+ModernNotify.info('This is a wide notification that takes up more space');`,
+            narrow: `ModernNotify.init({ width: '200px' });
+ModernNotify.info('Narrow notification');`,
+            customHTML: `ModernNotify.init({
+    allowHtml: true,
+    template: (message, type, options) => \`
+        <div class="flex items-center">
+            <img src="https://via.placeholder.com/50" class="mr-3 rounded-full" alt="Custom icon">
+            <div>
+                <h3 class="font-bold">\${options.title}</h3>
+                <p class="mt-1">\${message}</p>
+            </div>
+        </div>
+    \`
+});
+ModernNotify.info('This is a custom HTML notification', { title: 'Custom Notification' });`,
+            rtl: `ModernNotify.init({ rtl: true });
+ModernNotify.info('هذا إشعار بالعربية', { title: 'عنوان' });`,
+            persistent: `ModernNotify.init({ persist: true });
+ModernNotify.info('This is a persistent notification. Clicking will not dismiss it.');`,
+            withActions: `ModernNotify.init({
+    actions: [
+        { text: 'Accept', onClick: () => alert('Accepted!') },
+        { text: 'Decline', onClick: () => alert('Declined!') }
+    ]
+});
+ModernNotify.info('Please respond to this notification');`,
+            withSound: `ModernNotify.init({ sound: 'https://assets.mixkit.co/active_storage/sfx/2870/2870-preview.mp3' });
+ModernNotify.info('This notification comes with a sound');`,
+            grouped: `ModernNotify.init({ grouping: true });
+for (let i = 0; i < 5; i++) {
+    ModernNotify.info('This is a grouped notification');
+}`,
+            darkTheme: `ModernNotify.init({ theme: 'dark' });
+ModernNotify.info('This is a dark-themed notification');`
+        };
+
+        // Open the modal with the corresponding code snippet
+        function openCodeModal(type) {
+            const codeContent = document.getElementById('codeContent');
+            codeContent.textContent = codeSnippets[type];
+            Prism.highlightElement(codeContent);
+            document.getElementById('codeModal').style.display = 'flex';
+        }
+
+        // Close the modal
+        function closeCodeModal() {
+            document.getElementById('codeModal').style.display = 'none';
+        }
+
+        // Copy the code from the textarea
+        function copyCode() {
+            const codeContent = document.getElementById('codeContent').textContent;
+            navigator.clipboard.writeText(codeContent).then(() => {
+                ModernNotify.init({
+                    position: 'top-right',
+                    duration: 3000,
+                    theme: 'light',
+                    showProgressBar: true
+                });
+                ModernNotify.success('Code copied to clipboard!');
+            }).catch((err) => {
+                console.error('Failed to copy code: ', err);
+                ModernNotify.init({
+                    position: 'top-right',
+                    duration: 3000,
+                    theme: 'light',
+                    showProgressBar: true
+                });
+                ModernNotify.error('Failed to copy code. Please try again.');
+            });
+        }
+
+        // Notification functions
+        function showSuccessNotification() {
+            ModernNotify.init({ position: 'top-right' });
+            ModernNotify.success('Operation completed successfully!');
+        }
+
+        function showErrorNotification() {
+            ModernNotify.init({ position: 'top-right', theme: 'dark' });
+            ModernNotify.error('An error occurred. Please try again.');
+        }
+
+        function showWarningNotification() {
+            ModernNotify.init({ position: 'top-right', animationStyle: 'fade' });
+            ModernNotify.warning('Warning: Low disk space');
+        }
+
+        function showInfoNotification() {
+            ModernNotify.init({ position: 'top-right', showProgressBar: false });
+            ModernNotify.info('Your session will expire in 5 minutes');
+        }
+
+        function showTopLeftNotification() {
+            ModernNotify.init({ 
+                position: 'top-left',
+                animationStyle: 'slide',
+                slideDirection: 'left'
+            });
+            ModernNotify.info('This notification appears in the top-left corner');
+        }
+
+        function showBottomRightNotification() {
+            ModernNotify.init({ position: 'bottom-right' });
+            ModernNotify.info('This notification appears in the bottom-right corner');
+        }
+
+        function showBottomLeftNotification() {
+            ModernNotify.init({ 
+                position: 'bottom-left',
+                animationStyle: 'slide',
+                slideDirection: 'left'
+            });
+            ModernNotify.info('This notification appears in the bottom-left corner');
+        }
+
+        function showLongDurationNotification() {
+            ModernNotify.init({ duration: 10000 });
+            ModernNotify.info('This notification will stay for 10 seconds');
+        }
+
+        function showShortDurationNotification() {
+            ModernNotify.init({ duration: 1000 });
+            ModernNotify.info('Quick notification!');
+        }
+
+        function showWideNotification() {
+            ModernNotify.init({ width: '400px' });
+            ModernNotify.info('This is a wide notification that takes up more space');
+        }
+
+        function showNarrowNotification() {
+            ModernNotify.init({ width: '200px' });
+            ModernNotify.info('Narrow notification');
+        }
+
+        function showCustomHTMLNotification() {
+            ModernNotify.init({
+                allowHtml: true,
+                template: (message, type, options) => `
+                    <div class="flex items-center">
+                        <img src="https://via.placeholder.com/50" class="mr-3 rounded-full" alt="Custom icon">
+                        <div>
+                            <h3 class="font-bold">${options.title}</h3>
+                            <p class="mt-1">${message}</p>
+                        </div>
+                    </div>
+                `
+            });
+            ModernNotify.info('This is a custom HTML notification', { title: 'Custom Notification' });
+        }
+
+        function showRTLNotification() {
+            ModernNotify.init({ rtl: true });
+            ModernNotify.info('هذا إشعار بالعربية', { title: 'عنوان' });
+        }
+
+        function showPersistentNotification() {
+            ModernNotify.init({ persist: true });
+            ModernNotify.info('This is a persistent notification. Clicking will not dismiss it.');
+        }
+
+        function showNotificationWithActions() {
+            ModernNotify.init({
+                actions: [
+                    { text: 'Accept', onClick: () => alert('Accepted!') },
+                    { text: 'Decline', onClick: () => alert('Declined!') }
+                ]
+            });
+            ModernNotify.info('Please respond to this notification');
+        }
+
+        function showNotificationWithSound() {
+            ModernNotify.init({ sound: 'https://assets.mixkit.co/active_storage/sfx/2870/2870-preview.mp3' });
+            ModernNotify.info('This notification comes with a sound');
+        }
+
+        function showGroupedNotifications() {
+            ModernNotify.init({ grouping: true });
+            for (let i = 0; i < 5; i++) {
+                ModernNotify.info('This is a grouped notification');
+            }
+        }
+
+        function showDarkThemeNotification() {
+            ModernNotify.init({ theme: 'dark' });
+            ModernNotify.info('This is a dark-themed notification');
+        }
+
+// Custom notification function
+function showCustomNotification(event) {
+            event.preventDefault();
+            const customIcon = document.getElementById('customIcon').value;
+            const customTitle = document.getElementById('customTitle').value;
+            const customText = document.getElementById('customText').value;
+            const customDuration = parseInt(document.getElementById('customDuration').value);
+            const customTheme = document.getElementById('customTheme').value;
+            const customWidth = document.getElementById('customWidth').value + 'px';
+            const customPosition = document.getElementById('customPosition').value;
+            const customAnimationStyle = document.getElementById('customAnimationStyle').value;
+            const customSlideDirection = document.getElementById('customSlideDirection').value;
+            const customPauseOnHover = document.getElementById('customPauseOnHover').checked;
+            const customShowProgressBar = document.getElementById('customShowProgressBar').checked;
+            const customIconUrl = document.getElementById('customIconUrl').value;
+
+            let themeOptions = { theme: customTheme };
+            if (customTheme === 'custom') {
+                themeOptions.customTheme = {
+                    backgroundColor: document.getElementById('customBackgroundColor').value,
+                    textColor: document.getElementById('customTextColor').value,
+                    progressBarColor: document.getElementById('customProgressBarColor').value,
+                    titleColor: document.getElementById('customTitleColor').value
+                };
+            }
+
+            let iconOptions = {};
+            if (customIcon === 'custom' && customIconUrl) {
+                iconOptions.customIcons = {
+                    custom: `<img src="${customIconUrl}" width="24" height="24" alt="Custom Icon">`
+                };
+            }
+
+            const customNotify = Object.create(ModernNotify);
+            customNotify.init({
+                position: customPosition,
+                duration: customDuration,
+                width: customWidth,
+                animationStyle: customAnimationStyle,
+                slideDirection: customSlideDirection,
+                pauseOnHover: customPauseOnHover,
+                showProgressBar: customShowProgressBar,
+                ...themeOptions,
+                ...iconOptions
+            });
+
+            customNotify[customIcon === 'custom' ? 'info' : customIcon](customText, { title: customTitle });
+        }
+
+        // Add event listener for the custom notification form
+        document.getElementById('customNotificationForm').addEventListener('submit', showCustomNotification);
+
+        // Show/hide slide direction based on animation style
+        document.getElementById('customAnimationStyle').addEventListener('change', function() {
+            const slideDirectionContainer = document.getElementById('slideDirectionContainer');
+            slideDirectionContainer.style.display = this.value === 'slide' ? 'block' : 'none';
+        });
+
+        // Show/hide custom theme colors based on theme selection
+        document.getElementById('customTheme').addEventListener('change', function() {
+            const customThemeColors = document.getElementById('customThemeColors');
+            customThemeColors.style.display = this.value === 'custom' ? 'block' : 'none';
+        });
+
+        // Show/hide custom icon URL input based on icon selection
+        document.getElementById('customIcon').addEventListener('change', function() {
+            const customIconUrlContainer = document.getElementById('customIconUrlContainer');
+            customIconUrlContainer.style.display = this.value === 'custom' ? 'block' : 'none';
+        });
+
+        // Update color input text when color is changed
+        document.querySelectorAll('input[type="color"]').forEach(colorInput => {
+            colorInput.addEventListener('input', function() {
+                this.nextElementSibling.value = this.value.toUpperCase();
+            });
+        });
+
+        // Update color input when text is changed
+        document.querySelectorAll('input[type="text"][value^="#"]').forEach(textInput => {
+            textInput.addEventListener('input', function() {
+                this.previousElementSibling.value = this.value;
+            });
+        });
+
+        // Initialize CodeMirror
+        const codeEditor = CodeMirror.fromTextArea(document.getElementById("codeEditor"), {
+            lineNumbers: true,
+            mode: "javascript",
+            theme: "monokai",
+            lineWrapping: true,
+            smartIndent: true,
+            tabSize: 2,
+            matchBrackets: true,
+            autoCloseBrackets: true,
+        });
+
+       // Set initial content
+    codeEditor.setValue(`// ModernNotify Examples
+
+// Basic Usage
+// -----------
+// Initialize ModernNotify with default settings
+ModernNotify.init();
+
+// Show different types of notifications
+ModernNotify.success('Operation completed successfully!');
+ModernNotify.error('An error occurred. Please try again.');
+ModernNotify.warning('Warning: Low disk space');
+ModernNotify.info('Your session will expire in 5 minutes');
+
+// Customizing Notifications
+// -------------------------
+// Change position (top-right, top-left, bottom-right, bottom-left)
+ModernNotify.init({ position: 'bottom-right' });
+ModernNotify.info('This notification appears in the bottom-right corner');
+
+// Change theme (light, dark)
+ModernNotify.init({ theme: 'dark' });
+ModernNotify.success('This is a dark-themed notification');
+
+// Customize duration (in milliseconds)
+ModernNotify.init({ duration: 10000 }); // 10 seconds
+ModernNotify.info('This notification will stay for 10 seconds');
+
+// Change animation style (slide, fade)
+ModernNotify.init({ animationStyle: 'fade' });
+ModernNotify.warning('This notification fades in and out');
+
+// Customize width
+ModernNotify.init({ width: '400px' });
+ModernNotify.info('This is a wider notification');
+
+// Hide progress bar
+ModernNotify.init({ showProgressBar: false });
+ModernNotify.success('This notification has no progress bar');
+
+// Advanced Features
+// -----------------
+// Use custom HTML (make sure to enable allowHtml)
+ModernNotify.init({
+    allowHtml: true,
+    template: (message, type, options) => \`
+        <div class="flex items-center">
+            <img src="https://via.placeholder.com/50" class="mr-3 rounded-full" alt="Custom icon">
+            <div>
+                <h3 class="font-bold">\${options.title}</h3>
+                <p class="mt-1">\${message}</p>
+            </div>
+        </div>
+    \`
+});
+ModernNotify.info('This is a custom HTML notification', { title: 'Custom Notification' });
+
+// Add actions to notifications
+ModernNotify.init({
+    actions: [
+        { text: 'Accept', onClick: () => console.log('Accepted!') },
+        { text: 'Decline', onClick: () => console.log('Declined!') }
+    ]
+});
+ModernNotify.info('Please respond to this notification');
+
+// Group notifications
+ModernNotify.init({ grouping: true });
+for (let i = 0; i < 3; i++) {
+    ModernNotify.info('This is a grouped notification');
+}
+
+// Persistent notification (doesn't auto-dismiss)
+ModernNotify.init({ persist: true });
+ModernNotify.warning('This notification cannot be dismissed');
+
+// Right-to-left support
+ModernNotify.init({ rtl: true });
+ModernNotify.info('هذا إشعار باللغة العربية', { title: 'إشعار' });
+
+// Play a sound when the notification appears
+ModernNotify.init({ sound: 'https://example.com/notification-sound.mp3' });
+ModernNotify.success('This notification comes with a sound');
+
+// Combining multiple options
+ModernNotify.init({
+    position: 'top-left',
+    theme: 'dark',
+    duration: 5000,
+    width: '350px',
+    animationStyle: 'slide',
+    slideDirection: 'left',
+    showProgressBar: true,
+    pauseOnHover: true
+});
+ModernNotify.info('This notification combines multiple custom options');
+
+// Remember to test these examples one at a time to see their individual effects!
+`);
+
+        // Execute code button
+        document.getElementById('executeCode').addEventListener('click', function() {
+            const code = codeEditor.getValue();
+            try {
+                eval(code);
+            } catch (error) {
+                console.error('Error executing code:', error);
+                ModernNotify.init({ position: 'top-right', theme: 'dark' });
+                ModernNotify.error('Error executing code. Check console for details.');
+            }
+        });
+    </script>
+</body>
+</html>

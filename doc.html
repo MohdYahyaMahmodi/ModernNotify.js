@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ModernNotify.js Documentation</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/4.2.12/marked.min.js"></script>
+    <style>
+        :root {
+            --primary-color: #3498db;
+            --secondary-color: #2c3e50;
+            --background-color: #f8f9fa;
+            --text-color: #333;
+            --code-background: #e9ecef;
+            --table-border-color: #dee2e6;
+            --header-background: #000000;
+            --header-text-color: #ffffff;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: var(--background-color);
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            background-color: var(--header-background);
+            color: var(--header-text-color);
+            text-align: center;
+            padding: 2rem 0;
+            margin-bottom: 2rem;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 1.5em;
+        }
+
+        h1, h2, h3 {
+            color: var(--secondary-color);
+            margin-top: 1.5em;
+            margin-bottom: 0.5em;
+        }
+
+        .text {
+          color: white;
+          font-size: 40px;
+        }
+
+        h1 { font-size: 2.5em; }
+        h2 { font-size: 2em; }
+        h3 { font-size: 1.5em; }
+
+        code {
+            background-color: var(--code-background);
+            padding: 2px 4px;
+            border-radius: 4px;
+            font-family: 'Courier New', Courier, monospace;
+        }
+
+        pre {
+            background-color: var(--code-background);
+            padding: 1rem;
+            border-radius: 4px;
+            overflow-x: auto;
+            font-family: 'Courier New', Courier, monospace;
+        }
+
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            margin-bottom: 1rem;
+        }
+
+        th, td {
+            border: 1px solid var(--table-border-color);
+            padding: 0.75rem;
+            text-align: left;
+        }
+
+        th {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        a {
+            color: var(--primary-color);
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+
+            h1 { font-size: 2em; }
+            h2 { font-size: 1.75em; }
+            h3 { font-size: 1.25em; }
+
+            table {
+                display: block;
+                overflow-x: auto;
+                white-space: nowrap;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1 class="text">ModernNotify.js Documentation</h1>
+    </header>
+    <div class="container">
+        <div id="content">Loading documentation...</div>
+    </div>
+
+    <script>
+        // Function to fetch and render the Markdown content
+        async function loadMarkdown() {
+            try {
+                const response = await fetch('documentation.md');
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                const markdown = await response.text();
+                document.getElementById('content').innerHTML = marked.parse(markdown);
+
+                // Add IDs to headings for better navigation
+                document.querySelectorAll('h2, h3, h4, h5, h6').forEach(heading => {
+                    const id = heading.textContent.toLowerCase().replace(/[^a-z0-9]+/g, '-');
+                    heading.id = id;
+                });
+
+                // Create a table of contents
+                const toc = document.createElement('nav');
+                toc.innerHTML = '<h2>Table of Contents</h2>';
+                const tocList = document.createElement('ul');
+                document.querySelectorAll('h2').forEach(heading => {
+                    const li = document.createElement('li');
+                    const a = document.createElement('a');
+                    a.href = `#${heading.id}`;
+                    a.textContent = heading.textContent;
+                    li.appendChild(a);
+                    tocList.appendChild(li);
+                });
+                toc.appendChild(tocList);
+                document.getElementById('content').insertBefore(toc, document.getElementById('content').firstChild);
+
+            } catch (error) {
+                console.error('Error loading the documentation:', error);
+                document.getElementById('content').innerHTML = 'Error loading the documentation. Please try again later.';
+            }
+        }
+
+        // Load the Markdown content when the page is ready
+        document.addEventListener('DOMContentLoaded', loadMarkdown);
+    </script>
+</body>
+</html>
