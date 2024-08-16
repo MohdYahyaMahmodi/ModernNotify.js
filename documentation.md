@@ -1,5 +1,3 @@
-# ModernNotify.js Documentation
-
 ## Table of Contents
 
 1. [Introduction](#1-introduction)

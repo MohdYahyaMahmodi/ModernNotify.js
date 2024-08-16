@@ -52,8 +52,8 @@
         }
 
         .text {
-          color: white;
-          font-size: 40px;
+            color: white;
+            font-size: 40px;
         }
 
         h1 { font-size: 2.5em; }
@@ -65,6 +65,8 @@
             padding: 2px 4px;
             border-radius: 4px;
             font-family: 'Courier New', Courier, monospace;
+            word-wrap: break-word;
+            white-space: pre-wrap;
         }
 
         pre {
@@ -73,12 +75,17 @@
             border-radius: 4px;
             overflow-x: auto;
             font-family: 'Courier New', Courier, monospace;
+            white-space: pre-wrap;
+            word-wrap: break-word;
         }
 
         table {
             border-collapse: collapse;
             width: 100%;
             margin-bottom: 1rem;
+            display: block;
+            overflow-x: auto;
+            white-space: nowrap;
         }
 
         th, td {
@@ -110,10 +117,20 @@
             h2 { font-size: 1.75em; }
             h3 { font-size: 1.25em; }
 
+            .text {
+                font-size: 30px;
+            }
+
+            pre, code {
+                font-size: 14px;
+            }
+
             table {
-                display: block;
-                overflow-x: auto;
-                white-space: nowrap;
+                font-size: 14px;
+            }
+
+            th, td {
+                padding: 0.5rem;
             }
         }
     </style>
@@ -142,21 +159,6 @@
                     const id = heading.textContent.toLowerCase().replace(/[^a-z0-9]+/g, '-');
                     heading.id = id;
                 });
-
-                // Create a table of contents
-                const toc = document.createElement('nav');
-                toc.innerHTML = '<h2>Table of Contents</h2>';
-                const tocList = document.createElement('ul');
-                document.querySelectorAll('h2').forEach(heading => {
-                    const li = document.createElement('li');
-                    const a = document.createElement('a');
-                    a.href = `#${heading.id}`;
-                    a.textContent = heading.textContent;
-                    li.appendChild(a);
-                    tocList.appendChild(li);
-                });
-                toc.appendChild(tocList);
-                document.getElementById('content').insertBefore(toc, document.getElementById('content').firstChild);
 
             } catch (error) {
                 console.error('Error loading the documentation:', error);
