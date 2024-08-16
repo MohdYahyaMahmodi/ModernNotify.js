@@ -67,7 +67,9 @@ ModernNotify.js is open-source software licensed under the [MIT license](https:/
 
 ## Author
 
-ModernNotify.js is created and maintained by Mohd Mahmodi.
+ModernNotify.js is created and maintained by Mohd Mahmodi. 
+
+Follow Mohd on Twitter: [@mohdmahmodi](https://twitter.com/mohdmahmodi)
 
 ## Copyright
 

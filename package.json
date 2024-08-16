@@ -1,6 +1,6 @@
 {
   "name": "modernnotify",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "A modern, customizable notification library for web applications",
   "main": "dist/modernnotify.js",
   "module": "dist/modernnotify.esm.js",
