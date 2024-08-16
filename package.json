@@ -23,12 +23,12 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/MohdYahyaMahmodi/ModernNotify.git"
+    "url": "git+https://github.com/MohdYahyaMahmodi/ModernNotify.js.git"
   },
   "bugs": {
-    "url": "https://github.com/MohdYahyaMahmodi/ModernNotify/issues"
+    "url": "https://github.com/MohdYahyaMahmodi/ModernNotify.js/issues"
   },
-  "homepage": "https://github.com/MohdYahyaMahmodi/ModernNotify#readme",
+  "homepage": "https://github.com/MohdYahyaMahmodi/ModernNotify.js#readme",
   "devDependencies": {
     "rollup": "^2.79.1",
     "@rollup/plugin-commonjs": "^22.0.2",
