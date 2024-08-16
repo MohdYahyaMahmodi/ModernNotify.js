@@ -147,7 +147,7 @@
         // Function to fetch and render the Markdown content
         async function loadMarkdown() {
             try {
-                const response = await fetch('documentation.md');
+                const response = await fetch('documentation.md'); 
                 if (!response.ok) {
                     throw new Error(`HTTP error! status: ${response.status}`);
                 }
