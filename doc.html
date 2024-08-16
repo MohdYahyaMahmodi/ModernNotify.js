@@ -37,7 +37,7 @@
             color: var(--header-text-color);
             text-align: center;
             padding: 2rem 0;
-            margin-bottom: 2rem;
+            margin-bottom: .5rem;
         }
 
         header h1 {
@@ -118,7 +118,7 @@
             h3 { font-size: 1.25em; }
 
             .text {
-                font-size: 30px;
+                font-size: 15px;
             }
 
             pre, code {
@@ -147,7 +147,7 @@
         // Function to fetch and render the Markdown content
         async function loadMarkdown() {
             try {
-                const response = await fetch('documentation.md'); 
+                const response = await fetch('documentation.md');
                 if (!response.ok) {
                     throw new Error(`HTTP error! status: ${response.status}`);
                 }
