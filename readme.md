@@ -26,17 +26,53 @@ Check out the [ModernNotify.js Demo](https://mohdyahyamahmodi.github.io/ModernNo
   For detailed usage instructions and API reference, please refer to our [Documentation](https://mohdyahyamahmodi.github.io/ModernNotify.js/doc.html).
 ## Installation
 
-You can install ModernNotify.js using npm:
+### npm
+
+You can install ModernNotify via npm:
 
 ```bash
 npm install modernnotify
 ```
 
+### CDN
+
 Or include it via CDN:
 
+#### UMD (Universal Module Definition)
+
 ```html
-<script src="https://cdn.jsdelivr.net/npm/modernnotify@1.0.1/dist/modernnotify.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/modernnotify@latest/dist/modernnotify.min.js"></script>
 ```
+
+#### ESM (ECMAScript Module)
+
+```html
+<script type="module">
+  import ModernNotify from 'https://cdn.jsdelivr.net/npm/modernnotify@latest/dist/ModernNotify.esm.js';
+  
+  // Initialize ModernNotify
+  ModernNotify.init();
+  
+  // Now you can use ModernNotify
+  ModernNotify.success('Hello, World!');
+</script>
+```
+
+#### TypeScript Usage
+
+If you're using TypeScript, you can import ModernNotify like this:
+
+```typescript
+import ModernNotify from 'modernnotify';
+
+// Initialize ModernNotify
+ModernNotify.init();
+
+// Now you can use ModernNotify
+ModernNotify.success('Hello, TypeScript!');
+```
+
+Note: Using `@latest` will always fetch the most recent version. While this ensures you have the latest features, it may introduce breaking changes in your project. For production environments, consider specifying a fixed version number.
 
 ## Basic Usage
 

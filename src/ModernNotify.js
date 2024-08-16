@@ -1,4 +1,4 @@
-// ModernNotify.js - NPM Version
+// modernNotify.js - NPM Version
 
 (function (global, factory) {
     typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :

@@ -1,10 +1,11 @@
 import resolve from '@rollup/plugin-node-resolve';
 import commonjs from '@rollup/plugin-commonjs';
 import { terser } from 'rollup-plugin-terser';
+import typescript from '@rollup/plugin-typescript';
 
 export default [
   {
-    input: 'src/modernnotify.js',
+    input: 'src/modernNotify.js',
     output: [
       {
         file: 'dist/modernnotify.js',
@@ -20,14 +21,30 @@ export default [
         plugins: [terser()]
       }
     ],
-    plugins: [resolve(), commonjs()]
+    plugins: [
+      typescript({ 
+        tsconfig: './tsconfig.json',
+        include: ['src/**/*'],
+        exclude: ['**/*.d.ts']
+      }),
+      resolve(),
+      commonjs()
+    ]
   },
   {
-    input: 'src/modernnotify.js',
+    input: 'src/modernNotify.js',
     output: {
       file: 'dist/modernnotify.esm.js',
       format: 'es'
     },
-    plugins: [resolve(), commonjs()]
+    plugins: [
+      typescript({ 
+        tsconfig: './tsconfig.json',
+        include: ['src/**/*'],
+        exclude: ['**/*.d.ts']
+      }),
+      resolve(),
+      commonjs()
+    ]
   }
 ];

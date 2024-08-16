@@ -1,15 +1,17 @@
 {
   "name": "modernnotify",
-  "version": "1.0.2",
+  "version": "1.0.4",
   "description": "A modern, customizable notification library for web applications",
   "main": "dist/modernnotify.js",
   "module": "dist/modernnotify.esm.js",
   "browser": "dist/modernnotify.min.js",
+  "types": "dist/modernnotify.d.ts",
   "files": [
     "dist"
   ],
   "scripts": {
-    "build": "rollup -c",
+    "build": "rollup -c && tsc --emitDeclarationOnly && npm run copy-dts",
+    "copy-dts": "copyfiles -f src/modernnotify.d.ts dist",
     "prepublishOnly": "npm run build"
   },
   "keywords": [
@@ -30,9 +32,13 @@
   },
   "homepage": "https://github.com/MohdYahyaMahmodi/ModernNotify.js#readme",
   "devDependencies": {
-    "rollup": "^2.79.1",
     "@rollup/plugin-commonjs": "^22.0.2",
     "@rollup/plugin-node-resolve": "^13.3.0",
-    "rollup-plugin-terser": "^7.0.2"
+    "@rollup/plugin-typescript": "^11.1.6",
+    "copyfiles": "^2.4.1",
+    "rollup": "^2.79.1",
+    "rollup-plugin-terser": "^7.0.2",
+    "tslib": "^2.6.3",
+    "typescript": "^5.5.4"
   }
 }

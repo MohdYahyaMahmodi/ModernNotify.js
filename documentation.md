@@ -1,3 +1,5 @@
+
+
 ## Table of Contents
 
 1. [Introduction](#1-introduction)
@@ -30,9 +32,9 @@ ModernNotify.js is a versatile and customizable notification library for web app
 
 ## 2. Installation
 
-### NPM
+### npm
 
-To install ModernNotify.js using npm, run the following command in your project directory:
+You can install ModernNotify via npm:
 
 ```bash
 npm install modernnotify
@@ -40,11 +42,43 @@ npm install modernnotify
 
 ### CDN
 
-You can also include ModernNotify.js directly in your HTML file using a CDN:
+Or include it via CDN:
+
+#### UMD (Universal Module Definition)
 
 ```html
-<script src="https://cdn.jsdelivr.net/npm/modernnotify@1.0.1/dist/modernnotify.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/modernnotify@latest/dist/modernnotify.min.js"></script>
 ```
+
+#### ESM (ECMAScript Module)
+
+```html
+<script type="module">
+  import ModernNotify from 'https://cdn.jsdelivr.net/npm/modernnotify@latest/dist/ModernNotify.esm.js';
+  
+  // Initialize ModernNotify
+  ModernNotify.init();
+  
+  // Now you can use ModernNotify
+  ModernNotify.success('Hello, World!');
+</script>
+```
+
+#### TypeScript Usage
+
+If you're using TypeScript, you can import ModernNotify like this:
+
+```typescript
+import ModernNotify from 'modernnotify';
+
+// Initialize ModernNotify
+ModernNotify.init();
+
+// Now you can use ModernNotify
+ModernNotify.success('Hello, TypeScript!');
+```
+
+Note: Using `@latest` will always fetch the most recent version. While this ensures you have the latest features, it may introduce breaking changes in your project. For production environments, consider specifying a fixed version number.
 
 ### Manual Installation
 
@@ -100,32 +134,32 @@ ModernNotify offers a wide range of configuration options. Here's a comprehensiv
 
 | Option | Type | Default | Description |
 |--------|------|---------|-------------|
-| position | string | 'top-right' | Position of the notification container. Options: 'top-right', 'top-left', 'bottom-right', 'bottom-left'. Determines where notifications appear on the screen. |
-| animationStyle | string | 'slide' | Animation style for showing/hiding notifications. Options: 'slide', 'fade'. 'slide' moves the notification in from the side, while 'fade' gradually changes opacity. |
-| slideDirection | string | 'right' | Direction for sliding animations. Options: 'right', 'left', 'top', 'bottom'. Only applicable when animationStyle is 'slide'. |
-| maxNotifications | number | 3 | Maximum number of notifications shown simultaneously. When this limit is reached, the oldest notification is removed to make room for a new one. |
-| allowHtml | boolean | false | Whether to allow HTML content in notifications. When true, HTML in the message will be rendered; when false, it will be escaped. |
-| theme | string | 'light' | Default theme. Options: 'light', 'dark'. Affects the overall color scheme of notifications. |
-| showProgressBar | boolean | true | Display a progress bar at the bottom of the notification, indicating how long it will remain visible. |
+| position | string | 'top-right' | Position of the notification container. Options: 'top-right', 'top-left', 'bottom-right', 'bottom-left'. |
+| animationStyle | string | 'slide' | Animation style for showing/hiding notifications. Options: 'slide', 'fade'. |
+| slideDirection | string | 'right' | Direction for sliding animations. Options: 'right', 'left', 'top', 'bottom'. |
+| maxNotifications | number | 3 | Maximum number of notifications shown simultaneously. |
+| allowHtml | boolean | false | Whether to allow HTML content in notifications. |
+| theme | string | 'light' | Default theme. Options: 'light', 'dark'. |
+| showProgressBar | boolean | true | Display a progress bar at the bottom of the notification. |
 | closeOnClick | boolean | true | Close the notification when clicked anywhere on it. |
-| pauseOnHover | boolean | true | Pause the notification's progress (and timer) when hovered over with the mouse. |
-| width | string | '300px' | Width of the notification. Can be any valid CSS width value. |
-| duration | number | 3000 | Duration the notification is displayed (in milliseconds) before automatically closing. |
-| iconSvg | object | {...} | SVG icons for different notification types. Contains keys 'success', 'error', 'warning', 'info', each with an SVG string as value. |
-| titles | object | {...} | Default titles for each notification type. Contains keys 'success', 'error', 'warning', 'info', each with a string value. |
-| onShow | function | null | Callback function executed when a notification is shown. Receives the notification object as an argument. |
-| onClose | function | null | Callback function executed when a notification is closed. Receives the notification object as an argument. |
-| onClick | function | null | Callback function executed when a notification is clicked. Receives the notification object as an argument. |
-| template | function | null | Custom HTML template for notifications. Allows complete customization of notification structure. |
+| pauseOnHover | boolean | true | Pause the notification's progress when hovered over. |
+| width | string | '300px' | Width of the notification. |
+| duration | number | 3000 | Duration the notification is displayed (in milliseconds). |
+| iconSvg | object | {...} | SVG icons for different notification types. |
+| titles | object | {...} | Default titles for each notification type. |
+| onShow | function | null | Callback function executed when a notification is shown. |
+| onClose | function | null | Callback function executed when a notification is closed. |
+| onClick | function | null | Callback function executed when a notification is clicked. |
+| template | function | null | Custom HTML template for notifications. |
 | sound | string | null | URL of a sound file to play when the notification is shown. |
-| rtl | boolean | false | Right-to-left text direction. When true, adjusts the layout for RTL languages. |
-| grouping | boolean | false | Group identical notifications together. When true, similar notifications are combined with a count indicator. |
-| maxGroupSize | number | 5 | Maximum number of notifications in a group before a new group is created. |
-| persist | boolean | false | Whether the notification persists until manually closed. When true, the notification doesn't auto-close. |
-| actions | array | [] | Array of action buttons to display in the notification. Each action is an object with 'text' and 'onClick' properties. |
-| customAnimations | object | null | Custom animations for showing and hiding notifications. Contains 'show' and 'hide' properties with CSS animation strings. |
-| customIcons | object | null | Custom icons for notifications. Overrides the default icons for each notification type. |
-| customTheme | object | null | Custom theme settings. Allows for detailed color customization of notifications. |
+| rtl | boolean | false | Right-to-left text direction. |
+| grouping | boolean | false | Group identical notifications together. |
+| maxGroupSize | number | 5 | Maximum number of notifications in a group. |
+| persist | boolean | false | Whether the notification persists until manually closed. |
+| actions | array | [] | Array of action buttons to display in the notification. |
+| customAnimations | object | null | Custom animations for showing and hiding notifications. |
+| customIcons | object | null | Custom icons for notifications. |
+| customTheme | object | null | Custom theme settings. |
 
 Example of using options when creating a notification:
 
@@ -152,13 +186,13 @@ ModernNotify.info('New message received', {
 
 ModernNotify provides several methods for managing notifications:
 
-- `ModernNotify.init(options)`: Initialize the library with global options. This should be called once before using any other methods.
-- `ModernNotify.success(message, options)`: Create a success notification. The message is displayed with a green color scheme and a checkmark icon by default.
-- `ModernNotify.error(message, options)`: Create an error notification. The message is displayed with a red color scheme and an X icon by default.
-- `ModernNotify.warning(message, options)`: Create a warning notification. The message is displayed with an orange color scheme and an exclamation mark icon by default.
-- `ModernNotify.info(message, options)`: Create an info notification. The message is displayed with a blue color scheme and an information icon by default.
+- `ModernNotify.init(options)`: Initialize the library with global options.
+- `ModernNotify.success(message, options)`: Create a success notification.
+- `ModernNotify.error(message, options)`: Create an error notification.
+- `ModernNotify.warning(message, options)`: Create a warning notification.
+- `ModernNotify.info(message, options)`: Create an info notification.
 - `ModernNotify.dismissAll()`: Dismiss all active notifications immediately.
-- `ModernNotify.setGlobalOption(key, value)`: Set a global option that will apply to all future notifications.
+- `ModernNotify.setGlobalOption(key, value)`: Set a global option.
 - `ModernNotify.getGlobalOption(key)`: Get the current value of a global option.
 
 Examples:
@@ -367,15 +401,15 @@ ModernNotify is designed to be responsive across different device sizes:
 
 ## 12. Best Practices
 
-1. Use appropriate notification types for different scenarios (success for confirmations, error for failures, etc.).
+1. Use appropriate notification types for different scenarios.
 2. Keep messages concise and clear to avoid overwhelming users.
 3. Avoid overusing notifications to prevent user fatigue.
 4. Use persistent notifications sparingly for important messages only.
-5. Test notifications on different devices and screen sizes to ensure proper display.
+5. Test notifications on different devices and screen sizes.
 6. Ensure custom templates maintain accessibility features.
-7. Use sound effects judiciously to avoid overwhelming users
+7. Use sound effects judiciously.
 8. Consider the context of your application when choosing notification duration and position.
-9. Implement error handling in custom callbacks to prevent breaking the notification flow.
+9. Implement error handling in custom callbacks.
 10. Use grouping for repetitive notifications to avoid cluttering the user interface.
 11. Customize the appearance of notifications to match your application's design language.
 12. Provide clear and actionable information in notification messages.
