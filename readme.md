@@ -19,12 +19,11 @@ ModernNotify.js is a versatile and customizable notification library for web app
 
 ## Demo
 
-Check out the [ModernNotify.js Demo](mohdyahyamahmodi.github.io/ModernNotify.js) to see the library in action.
+Check out the [ModernNotify.js Demo](https://mohdyahyamahmodi.github.io/ModernNotify.js) to see the library in action.
 
 ## Documentation
 
-For detailed usage instructions and API reference, please refer to our [Documentation](mohdyahyamahmodi.github.io/ModernNotify.js/doc.html).
-
+  For detailed usage instructions and API reference, please refer to our [Documentation](https://mohdyahyamahmodi.github.io/ModernNotify.js/doc.html).
 ## Installation
 
 You can install ModernNotify.js using npm:
