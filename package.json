@@ -1,11 +1,19 @@
 {
   "name": "modernnotify",
-  "version": "1.0.4",
-  "description": "A modern, customizable notification library for web applications",
+  "version": "1.1.0",
+  "description": "A dependency-free notification library for the web. Toasts, alerts, themes, progress bars, action buttons, grouping, RTL, and TypeScript types.",
   "main": "dist/modernnotify.js",
   "module": "dist/modernnotify.esm.js",
   "browser": "dist/modernnotify.min.js",
   "types": "dist/modernnotify.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/modernnotify.d.ts",
+      "import": "./dist/modernnotify.esm.js",
+      "require": "./dist/modernnotify.js"
+    }
+  },
+  "sideEffects": false,
   "files": [
     "dist"
   ],
@@ -16,21 +24,36 @@
   },
   "keywords": [
     "notification",
+    "notifications",
     "toast",
+    "toast-notification",
     "alert",
+    "snackbar",
+    "popup",
+    "message",
     "javascript",
-    "frontend"
+    "typescript",
+    "frontend",
+    "ui",
+    "dependency-free",
+    "vanilla-js",
+    "rtl",
+    "accessible",
+    "a11y"
   ],
-  "author": "Mohd Mahmodi",
+  "author": "Mohd Mahmodi <mohd@mahmodi.com> (https://mohdmahmodi.com)",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/MohdYahyaMahmodi/ModernNotify.js.git"
+    "url": "git+https://github.com/mohdmahmodi/ModernNotify.js.git"
   },
   "bugs": {
-    "url": "https://github.com/MohdYahyaMahmodi/ModernNotify.js/issues"
+    "url": "https://github.com/mohdmahmodi/ModernNotify.js/issues"
   },
-  "homepage": "https://github.com/MohdYahyaMahmodi/ModernNotify.js#readme",
+  "homepage": "https://mohdmahmodi.com",
+  "engines": {
+    "node": ">=14"
+  },
   "devDependencies": {
     "@rollup/plugin-commonjs": "^22.0.2",
     "@rollup/plugin-node-resolve": "^13.3.0",
